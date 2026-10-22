@@ -1,0 +1,51 @@
+services:
+  admin-service:
+    build:
+      context: ../admin-service
+    image: corporate-admin-service
+    container_name: admin-service
+    env_file:
+      - ../.env
+    ports:
+      - "127.0.0.1:8080:8080"
+    networks:
+      - admin-net
+    restart: unless-stopped
+
+  guest01:
+    build:
+      context: ../guest
+    image: corporate-guest
+    container_name: guest01
+    networks:
+      - guest-net
+    restart: unless-stopped
+
+  jit-gateway:
+    build:
+      context: ../jit-gateway
+    image: corporate-jit-gateway
+    container_name: jit-gateway
+    env_file:
+      - ../.env
+    environment:
+      JIT_DB_PATH: /data/jit.sqlite3
+    user: "1000:1000"
+    volumes:
+      - ../security/data:/data
+    ports:
+      - "127.0.0.1:8081:8081"
+    networks:
+      - admin-net
+      - guest-net
+    restart: unless-stopped
+
+networks:
+  admin-net:
+    name: corporate-admin
+    driver: bridge
+
+  guest-net:
+    name: corporate-guest
+    driver: bridge
+    internal: true
