@@ -32,6 +32,17 @@ addresses.
 
 **Result: PASS**
 
+### Test A2 — Requester identity enforcement
+
+- A request without the required request credential returned HTTP 401.
+- A request with an invalid request credential returned HTTP 401.
+- A request body claiming the requester was `administrator` was submitted with a valid request credential.
+- The resulting ticket recorded the requester as `guest01`, confirming that the gateway does not trust the caller-supplied identity.
+
+**Result: PASS**
+
+**Scope note:** This verifies identity-field spoofing protection for the simulated `guest01` requester. It does not independently authenticate individual people because the lab uses a shared request credential.
+
 ### Test B — Administrative request listing
 
 - An authenticated administrative request to `GET /admin/requests`
@@ -98,6 +109,25 @@ access event, with the revocation event recorded between them.
 
 **Result: PASS**
 
+## Test G: Expiration enforcement and audit logging
+
+**Objective:** Verify that an approved JIT grant permits access while active, denies access after expiration, and records the expiration and denial events.
+
+**Procedure and results:**
+
+1. Reused pending request `JIT-3E257E80E47B` and approved it for its configured five-minute duration.
+2. Used the issued temporary token to access the protected endpoint while the grant was active.
+   - Result: HTTP 200 — PASS.
+3. Retried access after the grant expired.
+   - Result: HTTP 403; response indicated the grant had expired or been revoked — PASS.
+4. Inspected the gateway audit log for the ticket.
+   - Observed event sequence: `request_submitted`, `access_granted`, `access_allowed`, `access_expired`, `access_denied` — PASS.
+   - Confirmed the `access_denied` event details reported `"reason": "expired"` — PASS.
+
+**Conclusion:** The gateway permitted access during the authorized window and denied access after expiration. Audit events recorded the request, approval, successful access, expiration, and subsequent denial.
+
+**Scope note:** This validates the JIT expiration behavior in the local Docker lab. It does not establish that the implementation meets all production identity, access-management, or compliance requirements.
+
 ## 4. Security Controls Demonstrated
 
 - Authentication required to submit an access request.
@@ -117,11 +147,10 @@ access event, with the revocation event recorded between them.
 
 This is a portfolio simulation, not a production JIT authorization system.
 
-- Docker bridge networks simulate network separation; they are not
-  physical VLANs or a substitute for testing a production network.
-- The requester identifier is supplied by the caller and is not
-  independently verified. The shared request credential does not prove
-  the real-world identity of an individual requester.
+- The gateway assigns the fixed simulated requester identity `guest01`
+  rather than trusting an identity supplied in the request body. The shared
+  request credential does not independently verify a real-world person's
+  identity; anyone who obtains it can submit requests as `guest01`.
 - A bearer credential can be used by anyone who obtains it while the
   grant remains active. The credential itself is not bound to a verified
   user or device.

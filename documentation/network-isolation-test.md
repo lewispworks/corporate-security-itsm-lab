@@ -54,6 +54,27 @@ Observed result:
 Result: PASS for the isolation objective. The guest container reported
 that the admin container IP was unreachable.
 
+## Test 4: Verify published host-port bindings
+
+Command:
+
+```bash
+sudo docker port admin-service && sudo docker port jit-gateway && sudo docker port guest01
+```
+
+Observed output:
+
+```text
+8080/tcp -> 127.0.0.1:8080
+8081/tcp -> 127.0.0.1:8081
+```
+
+The guest container produced no output because it has no published host ports.
+
+Result: PASS. The admin service and JIT gateway are published on the host loopback interface only. The guest container has no published host ports.
+
+Scope note: This verifies the configured Docker port bindings. It does not independently test the host firewall or every possible network access path.
+
 ## Conclusion
 
 The tests support the conclusion that the guest container could not reach
@@ -66,4 +87,4 @@ authorization is implemented, or that physical VLANs are configured.
 
 ## Evidence source
 
-Results were copied from the terminal
+Results were copied from the terminal.

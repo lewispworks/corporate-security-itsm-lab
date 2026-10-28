@@ -119,7 +119,7 @@ def health():
 @require_guest_request_token
 def create_request():
     payload = request.get_json(silent=True) or {}
-    requester_id = payload.get("requester_id")
+    requester_id = "guest01"
     justification = payload.get("justification")
     duration = payload.get("duration_minutes", 60)
 
@@ -337,7 +337,7 @@ def protected_access(ticket_id):
 
         if ticket["status"] != "approved" or ticket["expires_at"] <= now:
             audit(connection, "access_denied", ticket_id, details={
-                "reason": ticket["status"]
+                "reason": ticket["status"] if ticket["status"] != "approved" else "expired"
             })
             return jsonify({"error": "grant expired or revoked"}), 403
 
