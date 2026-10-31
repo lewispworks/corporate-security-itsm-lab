@@ -86,7 +86,7 @@ def require_configured_token(variable_name):
     if not expected or not supplied:
         return False
 
-    return hmac.compare_digest(supplied, expected)
+    return hmac.compare_digest(supplied.encode("utf-8"), expected.encode("utf-8"))
 
 
 def require_guest_request_token(function):
