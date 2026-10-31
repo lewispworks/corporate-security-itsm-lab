@@ -76,12 +76,14 @@ The integration was performed through a coordinated manual workflow rather than 
 
 ## Test Documentation
 
-- `documentation/admin-service-baseline.md`
-- `documentation/network-isolation-test.md`
-- `documentation/admin-authentication-test.md`
-- `documentation/jit-access-control-test.md`
-- `documentation/security-control-matrix.md`
-- `documentation/itsm-jit-access-case-study.md`
+- [Admin Service Baseline](documentation/admin-service-baseline.md)
+- [Network Isolation Test](documentation/network-isolation-test.md)
+- [Admin Authentication Test](documentation/admin-authentication-test.md)
+- [JIT Access Control Test](documentation/jit-access-control-test.md)
+- [Security Control Matrix](documentation/security-control-matrix.md)
+- [ITSM and JIT Access Case Study](documentation/itsm-jit-access-case-study.md)
+
+The test reports document observed results and the scope of each verification. The security control matrix maps implemented controls to their corresponding evidence.
 
 The test reports document observed results and the scope of each verification. The security control matrix maps implemented controls to their corresponding evidence.
 
@@ -89,16 +91,16 @@ The test reports document observed results and the scope of each verification. T
 
 The `evidence/` directory contains supporting artifacts from the lab's implementation and testing.
 
-- `01-architecture.png` — Lab architecture diagram.
-- `02-network-isolation.png` — Guest-to-admin network isolation test.
-- `03-admin-authentication.png` — Administrative endpoint authentication test.
-- `04-05-jit-request-approval.jpg` — JIT request and approval workflow.
-- `06-expired-access.png` — Verification that expired access is denied.
-- `07-audit-log.png` — Recorded JIT audit events.
-- `Service Health.png` — Service health verification.
-- `Spiceworks Ticket #3.pdf` — ITSM support ticket and closure documentation.
+- [Architecture Diagram](evidence/01-architecture.png)
+- [Network Isolation Test](evidence/02-network-isolation.png)
+- [Admin Authentication Test](evidence/03-admin-authentication.png)
+- [JIT Request and Approval](evidence/04-05-jit-request-approval.jpg)
+- [Expired Access Test](evidence/06-expired-access.png)
+- [JIT Audit Log](evidence/07-audit-log.png)
+- [Service Health Verification](evidence/Service%20Health.png)
+- [Spiceworks Support Ticket #3](evidence/Spiceworks%20Ticket%20%233.pdf)
 
-The editable architecture source is available at `documentation/architecture.mmd`.
+The editable architecture source is available at [documentation/architecture.mmd](documentation/architecture.mmd).
 
 ## Security Limitations
 
