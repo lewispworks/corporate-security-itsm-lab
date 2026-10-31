@@ -2,7 +2,7 @@
 
 ## Overview
 
-A hands-on cybersecurity portfolio project simulating selected enterprise security controls using Ubuntu Server, Docker, and Python Flask services.
+A hands-on cybersecurity portfolio project simulating selected enterprise security controls using Debian GNU/Linux, Docker, and Python Flask services.
 
 The lab demonstrates network isolation, protected administrative endpoints, a ticket-based Just-in-Time (JIT) access workflow, temporary credentials, access expiration, early revocation, and audit logging.
 
@@ -11,7 +11,7 @@ The project emphasizes layered security controls, access governance, verificatio
 ## Lab Environment
 
 - **Host:** Dell Latitude 5491
-- **Operating system:** Ubuntu Server 24.04 LTS
+- **Operating system:** Debian GNU/Linux 13 (trixie)
 - **Memory:** 8 GB RAM
 - **Container platform:** Docker
 - **Application framework:** Python Flask
@@ -84,6 +84,21 @@ The integration was performed through a coordinated manual workflow rather than 
 - `documentation/itsm-jit-access-case-study.md`
 
 The test reports document observed results and the scope of each verification. The security control matrix maps implemented controls to their corresponding evidence.
+
+## Evidence Package
+
+The `evidence/` directory contains supporting artifacts from the lab's implementation and testing.
+
+- `01-architecture.png` — Lab architecture diagram.
+- `02-network-isolation.png` — Guest-to-admin network isolation test.
+- `03-admin-authentication.png` — Administrative endpoint authentication test.
+- `04-05-jit-request-approval.jpg` — JIT request and approval workflow.
+- `06-expired-access.png` — Verification that expired access is denied.
+- `07-audit-log.png` — Recorded JIT audit events.
+- `Service Health.png` — Service health verification.
+- `Spiceworks Ticket #3.pdf` — ITSM support ticket and closure documentation.
+
+The editable architecture source is available at `documentation/architecture.mmd`.
 
 ## Security Limitations
 
