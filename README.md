@@ -57,6 +57,23 @@ This is a lab simulation, not a physical VLAN implementation.
 6. Access is denied when the grant expires or is revoked.
 7. The gateway records relevant request, decision, and access events in its audit log.
 
+### ITSM Workflow Integration
+
+Spiceworks Cloud Help Desk was used to simulate an enterprise IT support ticket lifecycle associated with privileged-access requests.
+
+The workflow demonstrated:
+
+1. Submission and acknowledgment of an IT support request.
+2. Documentation of business justification and simulated business-owner approval.
+3. Coordination between IT Support and the SOC Administrator.
+4. Independent JIT approval through the gateway.
+5. Verification of temporary access and automatic expiration.
+6. Documentation of security results and ticket closure.
+
+The Spiceworks ticket was linked to its corresponding JIT gateway request to maintain traceability between the ITSM process and technical access-control evidence.
+
+The integration was performed through a coordinated manual workflow rather than an automated Spiceworks API connection.
+
 ## Test Documentation
 
 - `documentation/admin-service-baseline.md`
@@ -64,6 +81,7 @@ This is a lab simulation, not a physical VLAN implementation.
 - `documentation/admin-authentication-test.md`
 - `documentation/jit-access-control-test.md`
 - `documentation/security-control-matrix.md`
+- `documentation/itsm-jit-access-case-study.md`
 
 The test reports document observed results and the scope of each verification. The security control matrix maps implemented controls to their corresponding evidence.
 
@@ -83,13 +101,15 @@ Docker network separation does not demonstrate physical VLAN configuration. The 
 
 ## Planned Improvements
 
-Potential future work includes:
+Potential future enhancements include:
 
-- Stronger requester identity verification.
-- More restrictive secret handling and credential lifecycle management.
-- Additional host-hardening evidence.
-- A simulated IT support ticket workflow integrated with JIT approvals.
-- Further monitoring and security validation.
+- Stronger requester identity verification through individual accounts and enterprise identity integration.
+- Multi-factor authentication for privileged-access approvals.
+- More restrictive secret handling and automated credential lifecycle management.
+- Production-grade application hosting behind a WSGI server.
+- TLS implementation and centralized, tamper-resistant audit storage.
+- Additional host-hardening evidence and security validation.
+- Expanded monitoring, alerting, and automated security testing.
 
 ## Handling Secrets
 
