@@ -1,0 +1,39 @@
+
+flowchart TB
+    HOST["Dell Latitude 5491<br/>Ubuntu Server 24.04<br/>Docker Host"]
+
+    subgraph GUEST["corporate-guest — Internal Docker Network"]
+        USER["guest01<br/>Guest Container"]
+    end
+
+    subgraph ADMIN["corporate-admin — Docker Bridge Network"]
+        SERVICE["admin-service<br/>Flask Protected Endpoint<br/>/admin<br/>Host: 127.0.0.1:8080"]
+    end
+
+    subgraph GATEWAY["JIT Gateway — Connected to Both Networks"]
+        JIT["jit-gateway<br/>/access/{ticket_id}<br/>Host: 127.0.0.1:8081"]
+        CHECK["Validate temporary credential<br/>Check approval and expiry<br/>Record audit event"]
+        PROXY["Retrieve ADMIN_TOKEN<br/>Forward authenticated request"]
+        JIT --> CHECK --> PROXY
+    end
+
+    DB[("SQLite<br/>Ticket records<br/>Credential hashes<br/>Audit events")]
+
+    USER -->|"Temporary bearer credential"| JIT
+    CHECK <-->|"Read and update"| DB
+    PROXY -->|"Bearer ADMIN_TOKEN"| SERVICE
+    USER -.->|"Direct access blocked"| SERVICE
+
+    HOST --- GUEST
+    HOST --- ADMIN
+    HOST --- GATEWAY
+
+    classDef guest fill:#e8f1ff,stroke:#3973ac,color:#16324f
+    classDef admin fill:#e8f5e9,stroke:#388e3c,color:#173b1a
+    classDef gateway fill:#fff3df,stroke:#c58b27,color:#503600
+    classDef database fill:#f1e8fa,stroke:#8053a6,color:#38204f
+
+    class USER guest
+    class SERVICE admin
+    class JIT,CHECK,PROXY gateway
+    class DB database
